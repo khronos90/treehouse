@@ -33,22 +33,16 @@ fn main() {
     let visitor_list = [
         Guest::new("bert", "Yo bert welcome!"),
         Guest::new("asccii boi", "Yo what up 🔠"),
-        Guest {
-            name: String::from("bruce"),
-            greeting: "Aha yeah yeah".to_owned(),
-        },
+        Guest::new("bruce", "Aha yeah yeah"),
     ];
 
     println!("Hello, what's your name?");
     let name = what_is_your_name();
-    let mut flag = true;
-    for visitor in visitor_list {
-        if visitor.name == name.trim().to_lowercase() {
-            visitor.greet();
-            flag = false;
-        }
-    }
-    if flag {
-        println!("Not allowed!");
+
+    let known_visitor = visitor_list.iter().find(|guest| guest.name == name);
+
+    match known_visitor {
+        Some(guest) => guest.greet(),
+        _ => println!("Not Allowed!"),
     }
 }
